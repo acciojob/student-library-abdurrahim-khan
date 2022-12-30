@@ -27,7 +27,7 @@ public class Card {
     @JsonIgnoreProperties("card")
     private Student student;
 
-    @OneToOne(mappedBy = "card", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "card", cascade = CascadeType.ALL)
     @JsonIgnoreProperties("card")
     private Transaction transaction;
 

@@ -50,14 +50,35 @@ public class TransactionService {
 
         if((!bookRepository5.existsById(bookId)) || (bookRepository5.findById(bookId).get().isAvailable()==false))
         {
+            Transaction transaction = Transaction.builder()
+                    .isIssueOperation(true)
+                    .transactionStatus(TransactionStatus.FAILED)
+                    .fineAmount(0)
+                    .transactionId(UUID.randomUUID().toString())
+                    .build();
+            transactionRepository5.save(transaction);
             throw new Exception("Book is either unavailable or not present");
         }
         if((!cardRepository5.existsById(cardId)) || (cardRepository5.findById(cardId).get().getCardStatus().toString().equals("DEACTIVATED")))
         {
+            Transaction transaction = Transaction.builder()
+                    .isIssueOperation(true)
+                    .transactionStatus(TransactionStatus.FAILED)
+                    .fineAmount(0)
+                    .transactionId(UUID.randomUUID().toString())
+                    .build();
+            transactionRepository5.save(transaction);
             throw new Exception("Card is invalid");
         }
         if(cardRepository5.findById(cardId).get().getBooks().size() >= max_allowed_books)
         {
+            Transaction transaction = Transaction.builder()
+                    .isIssueOperation(true)
+                    .transactionStatus(TransactionStatus.FAILED)
+                    .fineAmount(0)
+                    .transactionId(UUID.randomUUID().toString())
+                    .build();
+            transactionRepository5.save(transaction);
             throw new Exception("Book limit has reached for this card");
         }
         Book book = bookRepository5.findById(bookId).get();
