@@ -1,6 +1,10 @@
 package com.example.library.studentlibrary.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -8,17 +12,24 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@Builder
 public class Student {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(unique = true)
+    @Column(name = "student_email",unique = true)
     private String emailId;
+    @Column(name = "student_name")
     private String name;
+    @Column(name = "student_age")
     private int age; // in case we want to check on the basis of age while issuing
 
+    @Column(name = "student_country")
     private String country;
 
     public Student() {
@@ -33,9 +44,13 @@ public class Student {
 
 
     @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created_on")
     private Date createdOn;
 
     @UpdateTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "updated_on")
     private Date updatedOn;
 
     @Override
